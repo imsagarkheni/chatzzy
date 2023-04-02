@@ -83,7 +83,7 @@ module.exports = (name, link) => {
               <tr>
                 <td style="padding:40px 30px 30px 30px;text-align:center;font-size:1.5em;font-weight:bold;">
                 <a href="https://github.com/imsagarkheni/Sagar" target="_blank">
-                <img align="center" border="0" src="https://media.licdn.com/dms/image/C560BAQEaEblV_yqOjg/company-logo_200_200/0/1632923521522?e=2147483647&v=beta&t=cltdJEBYBx_LuLvH52cd2C8zW71mhMQGrKAR3NVzgEE" alt="Sagar" title="Sateeq Logo" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 19%;max-width: 106.4px;"
+                <img align="center" border="0" src="https://media.licdn.com/dms/image/C4D03AQGoRoliQXAvUA/profile-displayphoto-shrink_800_800/0/1664006750422?e=2147483647&v=beta&t=pTrPVSKLQfNu_0Wg5lqyXplUxe3A6O3T4F2vxyDTDS8" alt="Sagar" title="Sateeq Logo" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 19%;max-width: 106.4px;"
                   width="106.4" />
               </a>
                 </td>
