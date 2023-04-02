@@ -82,8 +82,8 @@ module.exports = (name, otp) => {
               <!--      Logo headder -->
               <tr>
                 <td style="padding:40px 30px 30px 30px;text-align:center;font-size:1.5em;font-weight:bold;">
-                <a href="https://scalelot.com" target="_blank">
-                <img align="center" border="0" src="https://media.licdn.com/dms/image/C560BAQEaEblV_yqOjg/company-logo_200_200/0/1632923521522?e=2147483647&v=beta&t=cltdJEBYBx_LuLvH52cd2C8zW71mhMQGrKAR3NVzgEE" alt="Scalelot" title="Sateeq Logo" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 19%;max-width: 106.4px;"
+                <a href="https://github.com/imsagarkheni/Sagar" target="_blank">
+                <img align="center" border="0" src="https://media.licdn.com/dms/image/C560BAQEaEblV_yqOjg/company-logo_200_200/0/1632923521522?e=2147483647&v=beta&t=cltdJEBYBx_LuLvH52cd2C8zW71mhMQGrKAR3NVzgEE" alt="Sagar" title="Sateeq Logo" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 19%;max-width: 106.4px;"
                   width="106.4" />
               </a>
                 </td>
@@ -105,7 +105,7 @@ module.exports = (name, otp) => {
                   <p style="font-size: 14px; line-height: 170%;">Love 💙 Team Chatzzy</p>
                   <p style="margin:0;font-size:.75rem;line-height:1.5em;text-align: center;">
                   For any assistance and queries write to us at </p>
-                  <p style="font-size: 14px; line-height: 170%;"><a rel="noopener" href="mailto:sagarkheni.scalelot@gmail.com?" target="_blank">sagarkheni.scalelot@gmail.com</a><br /><br /></p>
+                  <p style="font-size: 14px; line-height: 170%;"><a rel="noopener" href="mailto:sagarkheni34@gmail.com?" target="_blank">sagarkheni34@gmail.com</a><br /><br /></p>
                 </td>
               </tr>
             </table>
