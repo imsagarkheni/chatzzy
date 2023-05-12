@@ -26,10 +26,10 @@ const io = new Server(server, {
 // Add this
 // Listen for when the client connects via socket.io-client
 io.on("connection", async (socket) => {
-  console.log(JSON.stringify(socket.handshake.query));
+  // console.log(JSON.stringify(socket.handshake.query));
   const user_id = socket.handshake.query["user_id"];
 
-  console.log(`User connected ${socket.id}`);
+  // console.log(`User connected ${socket.id}`);
 
   if (Boolean(user_id)) {
     await User.findByIdAndUpdate(user_id, {
@@ -40,8 +40,8 @@ io.on("connection", async (socket) => {
 
   // We can write our socket event listeners in here...
   socket.on("friend_request", async (data) => {
-    const to = await User.findById(data.to).select("socket_id");
-    const from = await User.findById(data.from).select("socket_id");
+    const to = await User.findById(data.sender).select("socket_id");
+    const from = await User.findById(data.recipient).select("socket_id");
 
     // create a friend request
     await FriendRequest.create({
@@ -59,10 +59,10 @@ io.on("connection", async (socket) => {
 
   socket.on("accept_request", async (data) => {
     // accept friend request => add ref of each other in friends array
-    console.log(data);
+    // console.log(data);
     const request_doc = await FriendRequest.findById(data.request_id);
 
-    console.log(request_doc);
+    // console.log(request_doc);
 
     const sender = await User.findById(request_doc.sender);
     const receiver = await User.findById(request_doc.recipient);
@@ -94,7 +94,7 @@ io.on("connection", async (socket) => {
 
     // db.books.find({ authors: { $elemMatch: { name: "John Smith" } } })
 
-    console.log(existing_conversations);
+    // console.log(existing_conversations);
 
     callback(existing_conversations);
   });
@@ -208,85 +208,27 @@ io.on("connection", async (socket) => {
 
   // handle audio_call_not_picked
   socket.on("audio_call_not_picked", async (data) => {
-    console.log(data);
     // find and update call record
-    const { to, from } = data;
-
-    const to_user = await User.findById(to);
-
-    await AudioCall.findOneAndUpdate(
-      {
-        participants: { $size: 2, $all: [to, from] },
-      },
-      { verdict: "Missed", status: "Ended", endedAt: Date.now() }
-    );
-
     // TODO => emit call_missed to receiver of call
-    io.to(to_user.socket_id).emit("call_missed", {
-      from,
-      to,
-    });
   });
 
   // handle audio_call_accepted
   socket.on("audio_call_accepted", async (data) => {
-    const { to, from } = data;
-
-    const from_user = await User.findById(from);
-
     // find and update call record
-    await AudioCall.findOneAndUpdate(
-      {
-        participants: { $size: 2, $all: [to, from] },
-      },
-      { verdict: "Accepted" }
-    );
-
     // TODO => emit call_accepted to sender of call
-    io.to(from_user.socket_id).emit("call_accepted", {
-      from,
-      to,
-    });
   });
 
   // handle audio_call_denied
   socket.on("audio_call_denied", async (data) => {
     // find and update call record
-    const { to, from } = data;
-
-    await AudioCall.findOneAndUpdate(
-      {
-        participants: { $size: 2, $all: [to, from] },
-      },
-      { verdict: "Denied", status: "Ended", endedAt: Date.now() }
-    );
-
-    const from_user = await User.findById(from);
     // TODO => emit call_denied to sender of call
-
-    io.to(from_user.socket_id).emit("call_denied", {
-      from,
-      to,
-    });
   });
 
   // handle user_is_busy_audio_call
   socket.on("user_is_busy_audio_call", async (data) => {
-    const { to, from } = data;
     // find and update call record
-    await AudioCall.findOneAndUpdate(
-      {
-        participants: { $size: 2, $all: [to, from] },
-      },
-      { verdict: "Busy", status: "Ended", endedAt: Date.now() }
-    );
-
-    const from_user = await User.findById(from);
     // TODO => emit on_another_audio_call to sender of call
-    io.to(from_user.socket_id).emit("on_another_audio_call", {
-      from,
-      to,
-    });
+    
   });
 
   // handle Media/Document Message
@@ -327,6 +269,7 @@ io.on("connection", async (socket) => {
     socket.disconnect(0);
   });
 });
+
 
 
 
