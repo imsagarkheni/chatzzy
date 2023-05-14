@@ -45,8 +45,8 @@ io.on("connection", async (socket) => {
 
     // create a friend request
     await FriendRequest.create({
-      sender: data.from,
-      recipient: data.to,
+      sender: data.recipient,
+      recipient: data.sender,
     });
     // emit event request received to recipient
     io.to(to.socket_id).emit("new_friend_request", {

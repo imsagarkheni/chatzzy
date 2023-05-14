@@ -30,9 +30,9 @@ exports.getUsers = async (req, res, next) => {
     verified: true,
   }).select("firstName lastName _id");
 
-  // const all_requests = await FriendRequest.find({
-  //   $or: [{ sender: req.user._id }, { recipient: req.user._id }],
-  // });
+  const all_requests = await FriendRequest.find({
+    $or: [{ sender: req.user._id }, { recipient: req.user._id }],
+  });
 
   const this_user = req.user;
 
@@ -53,10 +53,10 @@ exports.getUsers = async (req, res, next) => {
 
 exports.getRequests = async (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  const requests = await FriendRequest.find({ recipient: req.user._id })
+  const requests = await FriendRequest.find({ sender: req.user._id })
     .populate("sender")
     .select("_id firstName lastName");
-  console.log(requests);
+  console.log("Fetch requests",requests);
   res.status(200).json({
     status: "success",
     data: requests,

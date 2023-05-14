@@ -19,15 +19,17 @@ const slice = createSlice({
   reducers: {
     fetchDirectConversations(state, action) {
       const list = action.payload.conversations.map((el) => {
+        console.log("ssss",el);
         const user = el.participants.find(
           (elm) => elm._id.toString() !== user_id
         );
+        
         return {
           id: el._id,
           user_id: user?._id,
           name: `${user?.firstName} ${user?.lastName}`,
           online: user?.status === "Online",
-          // img: `https://${S3_BUCKET_NAME}.s3.${AWS_S3_REGION}.amazonaws.com/${user?.avatar}`,
+          img: `https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg`,
           msg: el.messages.slice(-1)[0].text, 
           time: "9:36",
           unread: 0,

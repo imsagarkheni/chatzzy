@@ -162,7 +162,7 @@ const Footer = () => {
   const { current_conversation } = useSelector(
     (state) => state.conversation.direct_chat
   );
-
+// console.log("ggggggggggggggggg",current_conversation);
   const user_id = window.localStorage.getItem("user_id");
 
   const isMobile = useResponsive("between", "md", "xs", "sm");
@@ -254,12 +254,12 @@ const Footer = () => {
               <IconButton
                 onClick={() => {
                   socket.emit("text_message", {
-                    message: linkify(value),
+                    type: linkify(value),
                     conversation_id: room_id,
                     from: user_id,
                     to: current_conversation.user_id,
                     type: containsUrl(value) ? "Link" : "Text",
-                  });
+                  }); console.log("Msg",linkify(value))
                 }}
               >
                 <PaperPlaneTilt color="#ffffff" />
