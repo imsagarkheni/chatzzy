@@ -13,7 +13,7 @@ const routes = require("./routes/index");
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://chatzzy-frontend.vercel.app",
     methods: ["GET", "PATCH", "POST", "DELETE", "PUT"],
     credentials: true,
   })
