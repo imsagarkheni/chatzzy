@@ -15,7 +15,7 @@ export default function LoginPage() {
 
         <Stack direction="row" spacing={0.5}>
           <Typography variant="body2">
-            Sent to email (shreyanshshah242@gmail.com)
+            Sent to email
           </Typography>
         </Stack>
       </Stack>

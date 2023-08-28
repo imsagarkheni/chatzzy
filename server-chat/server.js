@@ -59,7 +59,7 @@ io.on("connection", async (socket) => {
 
   socket.on("accept_request", async (data) => {
     // accept friend request => add ref of each other in friends array
-    // console.log(data);
+    console.log(data);
     const request_doc = await FriendRequest.findById(data.request_id);
 
     // console.log(request_doc);
@@ -134,24 +134,32 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("get_messages", async (data, callback) => {
-    const { messages } = await OneToOneMessage.findById(
-      data.conversation_id
-    ).select("messages");
-    callback(messages);
+    try {
+      const messageDocument = await OneToOneMessage.findById(data.conversation_id).select("messages");
+      
+      if (!messageDocument) {
+        console.log("No message document found for conversation_id:", data.conversation_id);
+        callback(null); // Handle the case where the document is not found
+        return;
+      }
+      
+      const messages = messageDocument.messages;
+      console.log("Fetched messages:", messages);
+      callback(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      callback(null); // You might want to handle this case on the client side
+    }
   });
 
   // Handle incoming text/link messages
   socket.on("text_message", async (data) => {
     console.log("Received message:", data);
-
-    // data: {to, from, text}
-
     const { message, conversation_id, from, to, type } = data;
-
+    console.log("text Data",data);
+    return false
     const to_user = await User.findById(to);
     const from_user = await User.findById(from);
-
-    // message => {to, from, type, created_at, text, file}
 
     const new_message = {
       to: to,
@@ -284,7 +292,7 @@ mongoose
     console.log(err);
   });
 
-
+  mongoose.set('strictQuery', false);
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
   console.log(`App running on port ${port}`);

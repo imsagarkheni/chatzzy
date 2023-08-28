@@ -158,19 +158,14 @@ function containsUrl(text) {
 
 const Footer = () => {
   const theme = useTheme();
-
   const { current_conversation } = useSelector(
     (state) => state.conversation.direct_chat
   );
-// console.log("ggggggggggggggggg",current_conversation);
   const user_id = window.localStorage.getItem("user_id");
-
   const isMobile = useResponsive("between", "md", "xs", "sm");
-
   const { sideBar, room_id } = useSelector((state) => state.app);
 
-  const [openPicker, setOpenPicker] = React.useState(false);
-
+  const [openPicker, setOpenPicker] = useState(false);
   const [value, setValue] = useState("");
   const inputRef = useRef(null);
 
@@ -259,7 +254,7 @@ const Footer = () => {
                     from: user_id,
                     to: current_conversation.user_id,
                     type: containsUrl(value) ? "Link" : "Text",
-                  }); console.log("Msg",linkify(value))
+                  });
                 }}
               >
                 <PaperPlaneTilt color="#ffffff" />

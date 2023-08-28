@@ -56,7 +56,6 @@ exports.getRequests = async (req, res, next) => {
   const requests = await FriendRequest.find({ sender: req.user._id })
     .populate("sender")
     .select("_id firstName lastName");
-  console.log("Fetch requests",requests);
   res.status(200).json({
     status: "success",
     data: requests,

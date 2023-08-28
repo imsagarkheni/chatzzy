@@ -23,23 +23,26 @@ import { socket } from "../../socket";
 
 const Conversation = ({ isMobile, menu }) => {
   const dispatch = useDispatch();
-
-  const { conversations, current_messages } = useSelector(
-    (state) => state.conversation.direct_chat
-  );
-  const { room_id } = useSelector((state) => state.app);
+  const { conversations, current_messages } = useSelector(state => state.conversation.direct_chat);
+  const { room_id } = useSelector(state => state.app);
 
   useEffect(() => {
-    const current = conversations.find((el) => el?.id === room_id);
+    const current = conversations.find(el => el?.id === room_id);
+    if (current) {
+      socket.emit("get_messages", { conversation_id: current?.user_id }, data => {
+        console.log("RRRRRRRRRR", data);
 
-    socket.emit("get_messages", { conversation_id: current?.id }, (data) => {
-      // data => list of messages
-      console.log(data, "List of messages");
-      dispatch(FetchCurrentMessages({ messages: data }));
-    });
-
-    dispatch(SetCurrentConversation(current));
-  }, []);
+        if (data && data.messages) {
+          console.log(data.messages, "List of messages");
+          dispatch(FetchCurrentMessages({ messages: data.messages }));
+        } else {
+          console.log("No messages available.");
+        }
+      });
+  
+      dispatch(SetCurrentConversation(current));
+    }
+  }, [room_id, conversations, dispatch]);
   return (
     <Box p={isMobile ? 1 : 3}>
       <Stack spacing={3}>
@@ -95,12 +98,8 @@ const Conversation = ({ isMobile, menu }) => {
 const ChatComponent = () => {
   const isMobile = useResponsive("between", "md", "xs", "sm");
   const theme = useTheme();
-
   const messageListRef = useRef(null);
-
-  const { current_messages } = useSelector(
-    (state) => state.conversation.direct_chat
-  );
+  const { current_messages } = useSelector(state => state.conversation.direct_chat);
 
   useEffect(() => {
     // Scroll to the bottom of the message list when new messages are added
@@ -108,12 +107,7 @@ const ChatComponent = () => {
   }, [current_messages]);
 
   return (
-    <Stack
-      height={"100%"}
-      maxHeight={"100vh"}
-      width={isMobile ? "100vw" : "auto"}
-    >
-      {/*  */}
+    <Stack height={"100%"} maxHeight={"100vh"} width={isMobile ? "100vw" : "auto"}>
       <ChatHeader />
       <Box
         ref={messageListRef}
